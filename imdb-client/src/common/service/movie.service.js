@@ -1,6 +1,8 @@
 import { useState, useCallback, useEffect } from "react";
 import { toast } from "react-toastify";
 
+const baseUrl = process.env.baseUrl || 'http://localhost:4000';
+
 const useMovieService = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setloading] = useState(false);
@@ -15,7 +17,7 @@ const useMovieService = () => {
   const searchMovies = useCallback(async () => {
     setloading(true);
     const response = await fetch(
-      `http://localhost:4000/movies?name=${searchQuery.name}&sortBy=${
+      `${baseUrl}/movies?name=${searchQuery.name}&sortBy=${
         searchQuery.sortBy
       }&genre=${searchQuery.genre.join(",")}&descOrder=${
         searchQuery.descOrder
@@ -39,7 +41,7 @@ const useMovieService = () => {
         },
         body: JSON.stringify(data),
       };
-      const response = await fetch("http://localhost:4000/movies/", options);
+      const response = await fetch(`${baseUrl}/movies/`, options);
       const result = await response.json();
       if (result.statusCode === 200) {
         await searchMovies();
@@ -60,7 +62,7 @@ const useMovieService = () => {
         },
         body: JSON.stringify(data),
       };
-      const response = await fetch("http://localhost:4000/movies/", options);
+      const response = await fetch(`${baseUrl}/movies/`, options);
       const result = await response.json();
       if (result.statusCode === 200) {
         await searchMovies();
@@ -73,9 +75,7 @@ const useMovieService = () => {
   );
 
   const deleteMovie = useCallback(
-    async (data)
-    
-    => {
+    async (data) => {
       const options = {
         method: "DELETE",
         headers: {
@@ -83,7 +83,7 @@ const useMovieService = () => {
         },
         body: JSON.stringify(data),
       };
-      const response = await fetch("http://localhost:4000/movies/", options);
+      const response = await fetch(`${baseUrl}/movies/`, options);
       const result = await response.json();
       if (result.statusCode === 200) {
         await searchMovies();

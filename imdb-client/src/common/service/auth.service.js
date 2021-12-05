@@ -1,5 +1,8 @@
 import {useState, useCallback} from 'react';
 
+
+const baseUrl = process.env.baseUrl || 'http://localhost:4000';
+
 const useAuthService = () => {
     const [user, setUser] = useState();
 
@@ -11,7 +14,7 @@ const useAuthService = () => {
             },
             body: JSON.stringify(data),
         };
-        const response = await fetch('http://localhost:4000/accounts/authenticate', options);
+        const response = await fetch(`${baseUrl}/accounts/authenticate`, options);
         const result = await response.json();
         if(result.statusCode === 200){
             setUser(result.accountInfo)
@@ -28,7 +31,7 @@ const useAuthService = () => {
             },
             body: JSON.stringify(data),
         };
-        const response = await fetch('http://localhost:4000/accounts/register', options);
+        const response = await fetch(`${baseUrl}/accounts/register`, options);
         const result = await response.json();
         return (result.statusCode === 200);
     }, [])
