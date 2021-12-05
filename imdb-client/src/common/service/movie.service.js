@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
 import { toast } from "react-toastify";
 
-const baseUrl = process.env.BASE_URL;
+const baseUrl = process.env.API_BASE_URL;
 
 const useMovieService = () => {
   const [movies, setMovies] = useState([]);

@@ -1,7 +1,7 @@
 import {useState, useCallback} from 'react';
 
 
-const baseUrl = process.env.BASE_URL;
+const baseUrl = process.env.API_BASE_URL;
 
 const useAuthService = () => {
     const [user, setUser] = useState();
