@@ -1,0 +1,4 @@
+﻿{
+  "connectionString": "mongodb+srv://rd:rd@cluster0.y1r2r.mongodb.net/imdb?retryWrites=true&w=majority",
+  "secret": "4802hr02j4r0293-22u30423"
+}
