@@ -1,8 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 import { toast } from "react-toastify";
 
-const baseUrl = process.env.API_BASE_URL;
-
 const useMovieService = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setloading] = useState(false);
@@ -17,7 +15,7 @@ const useMovieService = () => {
   const searchMovies = useCallback(async () => {
     setloading(true);
     const response = await fetch(
-      `${baseUrl}/movies?name=${searchQuery.name}&sortBy=${
+      `${process.env.REACT_APP_API_BASE_URL}/movies?name=${searchQuery.name}&sortBy=${
         searchQuery.sortBy
       }&genre=${searchQuery.genre.join(",")}&descOrder=${
         searchQuery.descOrder
@@ -41,7 +39,7 @@ const useMovieService = () => {
         },
         body: JSON.stringify(data),
       };
-      const response = await fetch(`${baseUrl}/movies/`, options);
+      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/movies/`, options);
       const result = await response.json();
       if (result.statusCode === 200) {
         await searchMovies();
@@ -62,7 +60,7 @@ const useMovieService = () => {
         },
         body: JSON.stringify(data),
       };
-      const response = await fetch(`${baseUrl}/movies/`, options);
+      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/movies/`, options);
       const result = await response.json();
       if (result.statusCode === 200) {
         await searchMovies();
@@ -83,7 +81,7 @@ const useMovieService = () => {
         },
         body: JSON.stringify(data),
       };
-      const response = await fetch(`${baseUrl}/movies/`, options);
+      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/movies/`, options);
       const result = await response.json();
       if (result.statusCode === 200) {
         await searchMovies();
