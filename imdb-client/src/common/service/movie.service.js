@@ -73,9 +73,7 @@ const useMovieService = () => {
   );
 
   const deleteMovie = useCallback(
-    async (data)
-    
-    => {
+    async (data) => {
       const options = {
         method: "DELETE",
         headers: {
