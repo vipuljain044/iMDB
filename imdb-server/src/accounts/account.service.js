@@ -111,7 +111,7 @@ function hash(password) {
 
 function generateJwtToken(account) {
   // create a jwt token containing the account id that expires in 15 minutes
-  return jwt.sign({ sub: account.id, id: account.id }, config.secret, {
+  return jwt.sign({ sub: account.id, id: account.id }, process.env.JWT_SECRET, {
     expiresIn: "15m",
   });
 }
