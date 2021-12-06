@@ -1,5 +1,7 @@
 import {useState, useCallback} from 'react';
 
+const API_BASE_URL = process.env.NODE_ENV === 'production' ? "https://app-imdb-api.herokuapp.com" : "http://localhost:4000";
+
 const useAuthService = () => {
     const [user, setUser] = useState();
 
@@ -11,7 +13,7 @@ const useAuthService = () => {
             },
             body: JSON.stringify(data),
         };
-        const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/accounts/authenticate`, options);
+        const response = await fetch(`${API_BASE_URL}/accounts/authenticate`, options);
         const result = await response.json();
         if(result.statusCode === 200){
             setUser(result.accountInfo)
@@ -28,7 +30,7 @@ const useAuthService = () => {
             },
             body: JSON.stringify(data),
         };
-        const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/accounts/register`, options);
+        const response = await fetch(`${API_BASE_URL}/accounts/register`, options);
         const result = await response.json();
         return (result.statusCode === 200);
     }, [])

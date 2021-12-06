@@ -1,6 +1,8 @@
 import { useState, useCallback, useEffect } from "react";
 import { toast } from "react-toastify";
 
+const API_BASE_URL = process.env.NODE_ENV === 'production' ? "https://app-imdb-api.herokuapp.com" : "http://localhost:4000";
+ 
 const useMovieService = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setloading] = useState(false);
@@ -15,7 +17,7 @@ const useMovieService = () => {
   const searchMovies = useCallback(async () => {
     setloading(true);
     const response = await fetch(
-      `${process.env.REACT_APP_API_BASE_URL}/movies?name=${searchQuery.name}&sortBy=${
+      `${API_BASE_URL}/movies?name=${searchQuery.name}&sortBy=${
         searchQuery.sortBy
       }&genre=${searchQuery.genre.join(",")}&descOrder=${
         searchQuery.descOrder
@@ -39,7 +41,7 @@ const useMovieService = () => {
         },
         body: JSON.stringify(data),
       };
-      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/movies/`, options);
+      const response = await fetch(`${API_BASE_URL}/movies/`, options);
       const result = await response.json();
       if (result.statusCode === 200) {
         await searchMovies();
@@ -60,7 +62,7 @@ const useMovieService = () => {
         },
         body: JSON.stringify(data),
       };
-      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/movies/`, options);
+      const response = await fetch(`${API_BASE_URL}/movies/`, options);
       const result = await response.json();
       if (result.statusCode === 200) {
         await searchMovies();
@@ -81,7 +83,7 @@ const useMovieService = () => {
         },
         body: JSON.stringify(data),
       };
-      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/movies/`, options);
+      const response = await fetch(`${API_BASE_URL}/movies/`, options);
       const result = await response.json();
       if (result.statusCode === 200) {
         await searchMovies();
