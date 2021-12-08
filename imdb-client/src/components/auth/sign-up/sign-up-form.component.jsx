@@ -33,7 +33,7 @@ const SignUpForm = () => {
       ),
     }),
     onSubmit: async ({ fullName, email, password }) => {
-      const done = await signup({ email, password, fullName });
+      const done = await signup({ email: email.toLowerCase(), password, fullName });
       if(done){
         toast.success("Signup successfull! Please Login in.");
         history.push("/sign-in")

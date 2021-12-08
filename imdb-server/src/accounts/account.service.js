@@ -32,30 +32,35 @@ async function register(params, origin) {
 }
 
 async function authenticate({ email, password, ipAddress }) {
-  const searchQuery = { email };
-  const account = await db.Account.findOne(searchQuery);
+  try {
+    const searchQuery = { email };
+    const account = await db.Account.findOne(searchQuery);
 
-  if (
-    !account ||
-    !account.isVerified ||
-    !bcrypt.compareSync(password, account.passwordHash)
-  ) {
-    throw "Email or password is incorrect";
+    if (
+      !account ||
+      !account.isVerified ||
+      !bcrypt.compareSync(password, account.passwordHash)
+    ) {
+      throw "Email or password is incorrect";
+    }
+
+    // authentication successful so generate jwt and refresh tokens
+    const jwtToken = generateJwtToken(account);
+    const refreshToken = generateRefreshToken(account, ipAddress);
+
+    // save refresh token
+    await refreshToken.save();
+
+    // return basic details and tokens
+    return {
+      ...basicDetails(account),
+      jwtToken,
+      refreshToken: refreshToken.token,
+    };
   }
-
-  // authentication successful so generate jwt and refresh tokens
-  const jwtToken = generateJwtToken(account);
-  const refreshToken = generateRefreshToken(account, ipAddress);
-
-  // save refresh token
-  await refreshToken.save();
-
-  // return basic details and tokens
-  return {
-    ...basicDetails(account),
-    jwtToken,
-    refreshToken: refreshToken.token,
-  };
+  catch(err){
+    throw err;
+  }
 }
 
 module.exports = {

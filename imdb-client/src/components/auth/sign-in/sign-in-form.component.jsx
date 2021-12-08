@@ -24,7 +24,7 @@ const SignInForm = () => {
       password: Yup.string().required("Enter a password"),
     }),
     onSubmit: async ({ email, password }) => {
-      const done = await login({email, password});
+      const done = await login({email: email.toLowerCase(), password});
       if(done){
         toast.success("User Logged in");
         history.push("/")

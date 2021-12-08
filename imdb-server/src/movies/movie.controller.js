@@ -6,8 +6,8 @@ const {
   updateMovieSchema,
   deleteMovieSchema,
 } = require("./movie.schema");
-const authorize = require('../_middleware/authorize');
-const Role = require('../_helpers/role');
+// const authorize = require('../_middleware/authorize');
+// const Role = require('../_helpers/role');
 
 // routes
 router.get("/", async (req, res, next) => {
@@ -22,7 +22,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.post("/", authorize(Role.Admin), addMovieSchema, async (req, res, next) => {
+router.post("/", addMovieSchema, async (req, res, next) => {
   try {
     await movieService.addMovie(req.body);
     res.json({ statusCode: 200, message: "Movie Added Successfully" });
@@ -34,7 +34,7 @@ router.post("/", authorize(Role.Admin), addMovieSchema, async (req, res, next) =
   }
 });
 
-router.put("/", authorize(Role.Admin), updateMovieSchema, async (req, res, next) => {
+router.put("/", updateMovieSchema, async (req, res, next) => {
   try {
     await movieService.updateMovie(req.body);
     res.json({ statusCode: 200, message: "Movie Updated Successfully" });
@@ -46,7 +46,7 @@ router.put("/", authorize(Role.Admin), updateMovieSchema, async (req, res, next)
   }
 });
 
-router.delete("/", authorize(Role.Admin), deleteMovieSchema, async (req, res, next) => {
+router.delete("/", deleteMovieSchema, async (req, res, next) => {
   try {
     await movieService.deleteMovie(req.body.id);
     res.json({ statusCode: 200, message: "Movie deleted Successfully" });
